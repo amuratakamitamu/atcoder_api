@@ -18,7 +18,13 @@ axios(URL).then((response) => {
         const title = $(this).find('td:last-child a').text().trim();
         let link = $(this).find('td:last-child a').attr('href');
         link = "https://atcoder.jp" + link + "?lang=en";
-        upcoming.push({ time: time, title: title, link: link });
+
+        // Add duration calculation
+        const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
+        const currentTime = Date.now(); // Current UNIX time in milliseconds
+        const duration = unixTime - currentTime;
+
+        upcoming.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
     });
 
 
@@ -27,7 +33,13 @@ axios(URL).then((response) => {
         const title = $(this).parent().find('a').text().trim();
         let link = $(this).parent().find('a').attr('href');
         link = "https://atcoder.jp" + link + "?lang=en";
-        beginner.push({ time: time, title: title, link: link });
+
+        // Add duration calculation
+        const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
+        const currentTime = Date.now(); // Current UNIX time in milliseconds
+        const duration = unixTime - currentTime;
+
+        beginner.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
     });
 
     upcoming.shift(); // Delete first element
@@ -48,7 +60,13 @@ setInterval(function () {
             const title = $(this).find('td:last-child a').text().trim();
             let link = $(this).find('td:last-child a').attr('href');
             link = "https://atcoder.jp" + link + "?lang=en";
-            upcoming.push({ time: time, title: title, link: link });
+
+            // Add duration calculation
+            const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
+            const currentTime = Date.now(); // Current UNIX time in milliseconds
+            const duration = unixTime - currentTime;
+
+            upcoming.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
         });
 
 
@@ -57,14 +75,20 @@ setInterval(function () {
             const title = $(this).parent().find('a').text().trim();
             let link = $(this).parent().find('a').attr('href');
             link = "https://atcoder.jp" + link + "?lang=en";
-            beginner.push({ time: time, title: title, link: link });
+
+            // Add duration calculation
+            const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
+            const currentTime = Date.now(); // Current UNIX time in milliseconds
+            const duration = unixTime - currentTime;
+
+            beginner.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
         });
 
         upcoming.shift(); // Delete first element
         console.log(upcoming);
         // console.log(beginner);
     }).catch(error => console.log(error));
-}, 1800000);
+}, 300000);
 
 
 

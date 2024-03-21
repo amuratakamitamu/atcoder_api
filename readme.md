@@ -5,6 +5,7 @@
 </p>
 
 ## About
-
+AtCoder株式会社が開催するプログラミングコンテスト[AtCoder](https://atcoder.jp)の開催予定のコンテストの情報を取得することができる非公式APIです。
+情報は5分毎に更新されます。
 
 ## How to use
