@@ -36,6 +36,9 @@ axios(URL).then((response) => {
 }).catch(error => console.log(error));
 
 setInterval(function () {
+    beginner = [];
+    upcoming = [];
+
     axios(URL).then((response) => {
         const htmlParser = response.data;
         const $ = cheerio.load(htmlParser);
