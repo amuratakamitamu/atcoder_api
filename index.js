@@ -20,9 +20,10 @@ axios(URL).then((response) => {
         link = "https://atcoder.jp" + link + "?lang=en";
 
         // Add duration calculation
-        const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
-        const currentTime = Date.now(); // Current UNIX time in milliseconds
-        const duration = unixTime - currentTime;
+        let unixTime = new Date(time).getTime(); // UNIX time in milliseconds
+        let currentTime = Date.now(); // Current UNIX time in milliseconds
+        const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
+        unixTime = Math.floor(unixTime / 1000); // Remove last 3 digits
 
         upcoming.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
     });
@@ -35,9 +36,10 @@ axios(URL).then((response) => {
         link = "https://atcoder.jp" + link + "?lang=en";
 
         // Add duration calculation
-        const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
-        const currentTime = Date.now(); // Current UNIX time in milliseconds
-        const duration = unixTime - currentTime;
+        let unixTime = new Date(time).getTime(); // UNIX time in milliseconds
+        let currentTime = Date.now(); // Current UNIX time in milliseconds
+        const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
+        unixTime = Math.floor(unixTime / 1000); // Remove last 3 digits
 
         beginner.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
     });
@@ -62,9 +64,10 @@ setInterval(function () {
             link = "https://atcoder.jp" + link + "?lang=en";
 
             // Add duration calculation
-            const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
-            const currentTime = Date.now(); // Current UNIX time in milliseconds
-            const duration = unixTime - currentTime;
+            let unixTime = new Date(time).getTime(); // UNIX time in milliseconds
+            let currentTime = Date.now(); // Current UNIX time in milliseconds
+            const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
+            unixTime = Math.floor(unixTime / 1000); // Remove last 3 digits
 
             upcoming.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
         });
@@ -77,9 +80,10 @@ setInterval(function () {
             link = "https://atcoder.jp" + link + "?lang=en";
 
             // Add duration calculation
-            const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
-            const currentTime = Date.now(); // Current UNIX time in milliseconds
-            const duration = unixTime - currentTime;
+            let unixTime = new Date(time).getTime(); // UNIX time in milliseconds
+            let currentTime = Date.now(); // Current UNIX time in milliseconds
+            const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
+            unixTime = Math.floor(unixTime / 1000); // Remove last 3 digits
 
             beginner.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
         });
