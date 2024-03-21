@@ -106,5 +106,5 @@ fetch('http://localhost:8000/api/upcoming-contests')
 
 
 ## Warning
-- デプロイ先は予告なく変更される場合があります。
+- デプロイ先は予告なく変更される場合があり, URLを使用しているプログラムに影響を及ぼす可能性があります。
 - GitHub該当リポジトリに適応されているApache-2.0 licenseライセンスに基づいて使用してください。
