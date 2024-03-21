@@ -54,4 +54,8 @@ app.get("/api/upcoming-contests/ABC/next", (req, res) => {
     res.send(nextABC);
 });
 
-app.listen(console.log("server running!"));
+// app.listen(console.log("server running!"));
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
