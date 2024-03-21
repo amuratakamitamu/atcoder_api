@@ -1,4 +1,4 @@
-const PORT = 8000;
+// const PORT = 8000;
 const express = require("express");
 const axios = require("axios");
 const cheerio = require("cheerio");
@@ -54,4 +54,4 @@ app.get("/api/upcoming-contests/ABC/next", (req, res) => {
     res.send(nextABC);
 });
 
-app.listen(PORT, console.log("server running!"));
+app.listen(console.log("server running!"));
