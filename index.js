@@ -35,6 +35,36 @@ axios(URL).then((response) => {
     // console.log(beginner);
 }).catch(error => console.log(error));
 
+setInterval(function () {
+    axios(URL).then((response) => {
+        const htmlParser = response.data;
+        const $ = cheerio.load(htmlParser);
+
+        $('#contest-table-upcoming tr').each(function () {
+            const time = $(this).find('td:first-child .fixtime-short').text().trim();
+            const title = $(this).find('td:last-child a').text().trim();
+            let link = $(this).find('td:last-child a').attr('href');
+            link = "https://atcoder.jp" + link + "?lang=en";
+            upcoming.push({ time: time, title: title, link: link });
+        });
+
+
+        $('#contest-table-upcoming .user-blue').each(function () {
+            const time = $(this).parent().parent().prev().find('.fixtime-short').text().trim();
+            const title = $(this).parent().find('a').text().trim();
+            let link = $(this).parent().find('a').attr('href');
+            link = "https://atcoder.jp" + link + "?lang=en";
+            beginner.push({ time: time, title: title, link: link });
+        });
+
+        upcoming.shift(); // Delete first element
+        console.log(upcoming);
+        // console.log(beginner);
+    }).catch(error => console.log(error));
+}, 1800000);
+
+
+
 //GET - upcoming contests
 app.get("/api/upcoming-contests", (req, res) => {
     res.send(upcoming);
