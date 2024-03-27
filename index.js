@@ -92,7 +92,7 @@ setInterval(function () {
         console.log(upcoming);
         // console.log(beginner);
     }).catch(error => console.log(error));
-}, 300000);
+}, 10000);
 
 
 
