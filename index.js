@@ -1,100 +1,71 @@
-// const PORT = 8000;
+//const PORT = 8000;
 const express = require("express");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const app = express();
-app.use(express.json())
+app.use(express.json());
 
 const URL = "https://atcoder.jp/home?lang=en";
-let beginner = [];
 let upcoming = [];
+let beginner = [];
 
-axios(URL).then((response) => {
-    const htmlParser = response.data;
-    const $ = cheerio.load(htmlParser);
+function updateContests() {
+    axios(URL)
+        .then((response) => {
+            const htmlParser = response.data;
+            const $ = cheerio.load(htmlParser);
 
-    $('#contest-table-upcoming tr').each(function () {
-        const time = $(this).find('td:first-child .fixtime-short').text().trim();
-        const title = $(this).find('td:last-child a').text().trim();
-        let link = $(this).find('td:last-child a').attr('href');
-        link = "https://atcoder.jp" + link + "?lang=en";
+            $('#contest-table-upcoming tr').each(function () {
+                const time = $(this).find('td:first-child .fixtime-short').text().trim();
+                const title = $(this).find('td:last-child a').text().trim();
+                let link = $(this).find('td:last-child a').attr('href');
+                link = "https://atcoder.jp" + link + "?lang=en";
 
-        // Add duration calculation
-        let unixTime = new Date(time).getTime(); // UNIX time in milliseconds
-        let currentTime = Date.now(); // Current UNIX time in milliseconds
-        const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
-        unixTime = Math.floor(unixTime / 1000); // Remove last 3 digits
+                // Add duration calculation
+                const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
+                const currentTime = Date.now(); // Current UNIX time in milliseconds
+                const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
 
-        upcoming.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
-    });
+                upcoming.push({ time: time, title: title, link: link, unixTime, duration });
+            });
 
+            $('#contest-table-upcoming .user-blue').each(function () {
+                const time = $(this).parent().parent().prev().find('.fixtime-short').text().trim();
+                const title = $(this).parent().find('a').text().trim();
+                let link = $(this).parent().find('a').attr('href');
+                link = "https://atcoder.jp" + link + "?lang=en";
 
-    $('#contest-table-upcoming .user-blue').each(function () {
-        const time = $(this).parent().parent().prev().find('.fixtime-short').text().trim();
-        const title = $(this).parent().find('a').text().trim();
-        let link = $(this).parent().find('a').attr('href');
-        link = "https://atcoder.jp" + link + "?lang=en";
+                // Add duration calculation
+                const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
+                const currentTime = Date.now(); // Current UNIX time in milliseconds
+                const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
 
-        // Add duration calculation
-        let unixTime = new Date(time).getTime(); // UNIX time in milliseconds
-        let currentTime = Date.now(); // Current UNIX time in milliseconds
-        const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
-        unixTime = Math.floor(unixTime / 1000); // Remove last 3 digits
+                beginner.push({ time: time, title: title, link: link, unixTime, duration });
+            });
 
-        beginner.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
-    });
+            upcoming.shift(); // Delete first element
 
-    upcoming.shift(); // Delete first element
-    console.log(upcoming);
-    // console.log(beginner);
-}).catch(error => console.log(error));
+            console.log("Contests updated");
+        })
+        .catch((error) => console.log(error));
+}
+
+// Initial update
+updateContests();
 
 setInterval(function () {
-    beginner = [];
-    upcoming = [];
+    updateContests();
+}, 1800000);
 
-    axios(URL).then((response) => {
-        const htmlParser = response.data;
-        const $ = cheerio.load(htmlParser);
-
-        $('#contest-table-upcoming tr').each(function () {
-            const time = $(this).find('td:first-child .fixtime-short').text().trim();
-            const title = $(this).find('td:last-child a').text().trim();
-            let link = $(this).find('td:last-child a').attr('href');
-            link = "https://atcoder.jp" + link + "?lang=en";
-
-            // Add duration calculation
-            let unixTime = new Date(time).getTime(); // UNIX time in milliseconds
-            let currentTime = Date.now(); // Current UNIX time in milliseconds
-            const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
-            unixTime = Math.floor(unixTime / 1000); // Remove last 3 digits
-
-            upcoming.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
-        });
-
-
-        $('#contest-table-upcoming .user-blue').each(function () {
-            const time = $(this).parent().parent().prev().find('.fixtime-short').text().trim();
-            const title = $(this).parent().find('a').text().trim();
-            let link = $(this).parent().find('a').attr('href');
-            link = "https://atcoder.jp" + link + "?lang=en";
-
-            // Add duration calculation
-            let unixTime = new Date(time).getTime(); // UNIX time in milliseconds
-            let currentTime = Date.now(); // Current UNIX time in milliseconds
-            const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
-            unixTime = Math.floor(unixTime / 1000); // Remove last 3 digits
-
-            beginner.push({ time: time, title: title, link: link, unixTime: unixTime, duration: duration });
-        });
-
-        upcoming.shift(); // Delete first element
-        console.log(upcoming);
-        // console.log(beginner);
-    }).catch(error => console.log(error));
-}, 10000);
-
-
+// Update duration every second
+setInterval(function () {
+    upcoming.forEach((contest) => {
+        contest.duration = Math.floor((contest.unixTime - Date.now()) / 1000); // Update duration
+    });
+    beginner.forEach((contest) => {
+        contest.duration = Math.floor((contest.unixTime - Date.now()) / 1000); // Update duration
+    });
+}, 1000); // Update interval in milliseconds (1 second)
 
 //GET - upcoming contests
 app.get("/api/upcoming-contests", (req, res) => {
@@ -115,8 +86,25 @@ app.get("/api/upcoming-contests/ABC/next", (req, res) => {
     res.send(nextABC);
 });
 
-// app.listen(console.log("server running!"));
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+});
+
+
+// Graceful shutdown on SIGINT or SIGTERM
+process.on('SIGINT', () => {
+    console.log('Stopping server...');
+    server.close(() => {
+        console.log('Server stopped.');
+        process.exit(0);
+    });
+});
+
+process.on('SIGTERM', () => {
+    console.log('Stopping server on SIGTERM...');
+    server.close(() => {
+        console.log('Server stopped.');
+        process.exit(0);
+    });
 });
