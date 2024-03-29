@@ -15,6 +15,9 @@ function updateContests() {
             const htmlParser = response.data;
             const $ = cheerio.load(htmlParser);
 
+            upcoming = [];
+            beginner = [];
+
             $('#contest-table-upcoming tr').each(function () {
                 const time = $(this).find('td:first-child .fixtime-short').text().trim();
                 const title = $(this).find('td:last-child a').text().trim();
