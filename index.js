@@ -50,12 +50,14 @@ function updateContests() {
         .catch((error) => console.log(error));
 }
 
+
 // Initial update
 updateContests();
 
 setInterval(function () {
     updateContests();
 }, 1800000);
+
 
 // Update duration every second
 setInterval(function () {
@@ -66,6 +68,7 @@ setInterval(function () {
         contest.duration = Math.floor((contest.unixTime - Date.now()) / 1000); // Update duration
     });
 }, 1000); // Update interval in milliseconds (1 second)
+
 
 //GET - upcoming contests
 app.get("/api/upcoming-contests", (req, res) => {
