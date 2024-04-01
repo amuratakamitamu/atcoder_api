@@ -24,7 +24,7 @@ function updateContests() {
                 link = "https://atcoder.jp" + link + "?lang=en";
 
                 const unixTime = new Date(time).getTime();
-                const currentTime = Date.now();
+                const currentTime = Date.now() + 32400000;
                 const duration = Math.floor((unixTime - currentTime) / 1000);
 
                 upcoming.push({ time: time, title: title, link: link, unixTime, duration });
@@ -37,7 +37,7 @@ function updateContests() {
                 link = "https://atcoder.jp" + link + "?lang=en";
 
                 const unixTime = new Date(time).getTime();
-                const currentTime = Date.now() + 32400;
+                const currentTime = Date.now() + 32400000;
                 const duration = Math.floor((unixTime - currentTime) / 1000);
 
                 beginner.push({ time: time, title: title, link: link, unixTime, duration });
@@ -60,10 +60,10 @@ setInterval(function () {
 
 setInterval(function () {
     upcoming.forEach((contest) => {
-        contest.duration = Math.floor((contest.unixTime - Date.now()) / 1000);
+        contest.duration = Math.floor((contest.unixTime - Date.now() - 32400000) / 1000);
     });
     beginner.forEach((contest) => {
-        contest.duration = Math.floor((contest.unixTime - Date.now()) / 1000);
+        contest.duration = Math.floor((contest.unixTime - Date.now() - 32400000) / 1000);
     });
 }, 1000);
 
