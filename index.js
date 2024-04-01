@@ -37,7 +37,7 @@ function updateContests() {
                 link = "https://atcoder.jp" + link + "?lang=en";
 
                 const unixTime = new Date(time).getTime();
-                const currentTime = Date.now();
+                const currentTime = Date.now() + 32400;
                 const duration = Math.floor((unixTime - currentTime) / 1000);
 
                 beginner.push({ time: time, title: title, link: link, unixTime, duration });
