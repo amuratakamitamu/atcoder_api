@@ -60,10 +60,16 @@ setInterval(function () {
 
 setInterval(function () {
     upcoming.forEach((contest) => {
-        contest.duration = Math.floor((contest.unixTime - Date.now() - 32400000) / 1000);
+        const japanStandardTime = new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" });
+        const japanUnixTime = new Date(japanStandardTime).getTime();
+        contest.duration = Math.floor((contest.unixTime - japanUnixTime) / 1000);
+        // contest.duration = Math.floor((contest.unixTime - Date.now() - 32400000) / 1000);
     });
     beginner.forEach((contest) => {
-        contest.duration = Math.floor((contest.unixTime - Date.now() - 32400000) / 1000);
+        const japanStandardTime = new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" });
+        const japanUnixTime = new Date(japanStandardTime).getTime();
+        contest.duration = Math.floor((contest.unixTime - japanUnixTime) / 1000);
+        // contest.duration = Math.floor((contest.unixTime - Date.now() - 32400000) / 1000);
     });
 }, 1000);
 
