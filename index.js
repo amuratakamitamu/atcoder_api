@@ -19,7 +19,7 @@ function updateContests() {
             beginner = [];
 
             $('#contest-table-upcoming tr').each(function () {
-                const time = $(this).find('td:first-child .fixtime-short').text().trim();
+                const time = $(this).find('td:first-child .fixtime-short').text().trim().replace(/\+0900$/, '');
                 const title = $(this).find('td:last-child a').text().trim();
                 let link = $(this).find('td:last-child a').attr('href');
                 link = "https://atcoder.jp" + link + "?lang=en";
@@ -33,7 +33,7 @@ function updateContests() {
             });
 
             $('#contest-table-upcoming .user-blue').each(function () {
-                const time = $(this).parent().parent().prev().find('.fixtime-short').text().trim();
+                const time = $(this).parent().parent().prev().find('.fixtime-short').text().trim().replace(/\+0900$/, '');
                 const title = $(this).parent().find('a').text().trim();
                 let link = $(this).parent().find('a').attr('href');
                 link = "https://atcoder.jp" + link + "?lang=en";
