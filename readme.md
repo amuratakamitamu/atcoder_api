@@ -23,86 +23,26 @@ GETメソッドを使用し、JSON形式のコンテスト情報を得ること�
 
 
 ## Example
-### Javascriptを用いてJSONを処理するサンプルコード
-```js
-fetch('http://localhost:8000/api/upcoming-contests')
-  .then(response => response.json())
-  .then(data => {
-    // 取得したJSONデータを処理する
-    data.forEach(contest => {
-      console.log('Contest Title:', contest.title);
-      console.log('Start Time:', contest.time);
-      console.log('Link:', contest.link);
-      console.log('Unix Time:', contest.unixTime);
-      console.log('Duration:', contest.duration);
-      console.log('------------------------');
-    });
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
-```
-### GETによるJSONのレスポンス例
+### GETによるJSONの例
 ```JSON
 [
     {
-        "time": "2024-03-22 19:00:00+0900",
-        "title": "MC Digital Programming Contest 2024（AtCoder Heuristic Contest 031）",
-        "link": "https://atcoder.jp/contests/ahc031?lang=en",
-        "unixTime": 1711101600,
-        "duration": 51888
+        "time": "2024-04-06 21:00:00+0900",
+        "title": "Toyota Programming Contest 2024#4（AtCoder Beginner Contest 348）",
+        "link": "https://atcoder.jp/contests/abc348?lang=en",
+        "unixTime": 1712404800000,
+        "duration": 417165
     },
-    {
-        "time": "2024-03-23 21:00:00+0900",
-        "title": "UNIQUE VISION Programming Contest 2024 Spring(AtCoder Beginner Contest 346)",
-        "link": "https://atcoder.jp/contests/abc346?lang=en",
-        "unixTime": 1711195200,
-        "duration": 145488
-    },
-    {
-        "time": "2024-03-24 21:00:00+0900",
-        "title": "AtCoder Regular Contest 175",
-        "link": "https://atcoder.jp/contests/arc175?lang=en",
-        "unixTime": 1711281600,
-        "duration": 231888
-    },
-    {
-        "time": "2024-03-30 21:00:00+0900",
-        "title": "AtCoder Beginner Contest 347",
-        "link": "https://atcoder.jp/contests/abc347?lang=en",
-        "unixTime": 1711800000,
-        "duration": 750288
-    },
-    {
-        "time": "2024-03-31 21:00:00+0900",
-        "title": "AtCoder Grand Contest 066",
-        "link": "https://atcoder.jp/contests/agc066?lang=en",
-        "unixTime": 1711886400,
-        "duration": 836688
-    },
-    {
-        "time": "2024-04-07 19:00:00+0900",
-        "title": "AtCoder Heuristic Contest 032",
-        "link": "https://atcoder.jp/contests/ahc032?lang=en",
-        "unixTime": 1712484000,
-        "duration": 1434288
-    },
-    {
-        "time": "2024-04-13 21:00:00+0900",
-        "title": "AtCoder Beginner Contest 349",
-        "link": "https://atcoder.jp/contests/abc349?lang=en",
-        "unixTime": 1713009600,
-        "duration": 1959888
-    },
-    {
-        "time": "2024-04-20 21:00:00+0900",
-        "title": "AtCoder Beginner Contest 350",
-        "link": "https://atcoder.jp/contests/abc350?lang=en",
-        "unixTime": 1713614400,
-        "duration": 2564688
-    }
 ]
 ```
+### 項目と概要
+| 項目      | 概要                                       |
+| --------- | ------------------------------------------ |
+| time      | 開催時刻を日本標準時で提供します。         |
+| title     | コンテストのタイトルを提供します。         |
+| link      | コンテストのリンクを提供します。           |
+| unixTime  | 開催時刻をUNIX時間で提供します。(日本標準時) |
+| duration  | コンテスト開催までの残り時間を秒数で提供します。 |
 
 
 ## Warning
