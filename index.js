@@ -1,4 +1,3 @@
-//const PORT = 8000;
 const express = require("express");
 const axios = require("axios");
 const cheerio = require("cheerio");
@@ -24,10 +23,9 @@ function updateContests() {
                 let link = $(this).find('td:last-child a').attr('href');
                 link = "https://atcoder.jp" + link + "?lang=en";
 
-                // Add duration calculation
-                const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
-                const currentTime = Date.now(); // Current UNIX time in milliseconds
-                const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
+                const unixTime = new Date(time).getTime();
+                const currentTime = Date.now();
+                const duration = Math.floor((unixTime - currentTime) / 1000);
 
                 upcoming.push({ time: time, title: title, link: link, unixTime, duration });
             });
@@ -38,10 +36,9 @@ function updateContests() {
                 let link = $(this).parent().find('a').attr('href');
                 link = "https://atcoder.jp" + link + "?lang=en";
 
-                // Add duration calculation
-                const unixTime = new Date(time).getTime(); // UNIX time in milliseconds
-                const currentTime = Date.now(); // Current UNIX time in milliseconds
-                const duration = Math.floor((unixTime - currentTime) / 1000); // Remove last 3 digits
+                const unixTime = new Date(time).getTime();
+                const currentTime = Date.now();
+                const duration = Math.floor((unixTime - currentTime) / 1000);
 
                 beginner.push({ time: time, title: title, link: link, unixTime, duration });
             });
@@ -54,7 +51,6 @@ function updateContests() {
 }
 
 
-// Initial update
 updateContests();
 
 setInterval(function () {
@@ -62,15 +58,14 @@ setInterval(function () {
 }, 1800000);
 
 
-// Update duration every second
 setInterval(function () {
     upcoming.forEach((contest) => {
-        contest.duration = Math.floor((contest.unixTime - Date.now()) / 1000); // Update duration
+        contest.duration = Math.floor((contest.unixTime - Date.now()) / 1000);
     });
     beginner.forEach((contest) => {
-        contest.duration = Math.floor((contest.unixTime - Date.now()) / 1000); // Update duration
+        contest.duration = Math.floor((contest.unixTime - Date.now()) / 1000);
     });
-}, 1000); // Update interval in milliseconds (1 second)
+}, 1000);
 
 
 //GET - upcoming contests
@@ -92,25 +87,9 @@ app.get("/api/upcoming-contests/ABC/next", (req, res) => {
     res.send(nextABC);
 });
 
+
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-});
-
-
-// Graceful shutdown on SIGINT or SIGTERM
-process.on('SIGINT', () => {
-    console.log('Stopping server...');
-    server.close(() => {
-        console.log('Server stopped.');
-        process.exit(0);
-    });
-});
-
-process.on('SIGTERM', () => {
-    console.log('Stopping server on SIGTERM...');
-    server.close(() => {
-        console.log('Server stopped.');
-        process.exit(0);
-    });
 });
