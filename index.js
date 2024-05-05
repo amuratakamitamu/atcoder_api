@@ -18,27 +18,27 @@ function updateContests() {
             beginner = [];
 
             $('#contest-table-upcoming tr').each(function () {
-                const time = $(this).find('td:first-child .fixtime-short').text().trim().replace(/\+0900$/, '');
+                const time = $(this).find('td:first-child .fixtime-short').text();
                 const title = $(this).find('td:last-child a').text().trim();
                 let link = $(this).find('td:last-child a').attr('href');
                 link = "https://atcoder.jp" + link + "?lang=en";
 
-                const unixTime = new Date(time).getTime();
-                const currentTime = Date.now() + 32400000;
-                const duration = Math.floor((unixTime - currentTime) / 1000);
+                const unixTime = new Date(time).getTime() / 1000;
+                const currentUnixTime = Math.floor(Date.now() / 1000); //currentUnixTime: UTC
+                const duration = Math.floor(unixTime - currentUnixTime);
 
                 upcoming.push({ time: time, title: title, link: link, unixTime, duration });
             });
 
             $('#contest-table-upcoming .user-blue').each(function () {
-                const time = $(this).parent().parent().prev().find('.fixtime-short').text().trim().replace(/\+0900$/, '');
+                const time = $(this).parent().parent().prev().find('.fixtime-short').text();
                 const title = $(this).parent().find('a').text().trim();
                 let link = $(this).parent().find('a').attr('href');
                 link = "https://atcoder.jp" + link + "?lang=en";
 
-                const unixTime = new Date(time).getTime();
-                const currentTime = Date.now() + 32400000;
-                const duration = Math.floor((unixTime - currentTime) / 1000);
+                const unixTime = new Date(time).getTime() / 1000;
+                const currentUnixTime = Math.floor(Date.now() / 1000); //currentUnixTime: UTC
+                const duration = Math.floor(unixTime - currentUnixTime);
 
                 beginner.push({ time: time, title: title, link: link, unixTime, duration });
             });
@@ -60,16 +60,12 @@ setInterval(function () {
 
 setInterval(function () {
     upcoming.forEach((contest) => {
-        const japanStandardTime = new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" });
-        const japanUnixTime = new Date(japanStandardTime).getTime();
-        contest.duration = Math.floor((contest.unixTime - japanUnixTime) / 1000);
-        // contest.duration = Math.floor((contest.unixTime - Date.now() - 32400000) / 1000);
+        const currentUnixTime = Math.floor(Date.now() / 1000);
+        contest.duration = Math.floor(contest.unixTime - currentUnixTime);
     });
     beginner.forEach((contest) => {
-        const japanStandardTime = new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" });
-        const japanUnixTime = new Date(japanStandardTime).getTime();
-        contest.duration = Math.floor((contest.unixTime - japanUnixTime) / 1000);
-        // contest.duration = Math.floor((contest.unixTime - Date.now() - 32400000) / 1000);
+        const currentUnixTime = Math.floor(Date.now() / 1000);
+        contest.duration = Math.floor(contest.unixTime - currentUnixTime);
     });
 }, 1000);
 
