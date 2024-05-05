@@ -27,7 +27,7 @@ GETメソッドを使用し、JSON形式のコンテスト情報を得ること�
 ```JSON
 [
     {
-        "time": "2024-04-06 21:00:00",
+        "time": "2024-04-06 21:00:00+0900",
         "title": "Toyota Programming Contest 2024#4（AtCoder Beginner Contest 348）",
         "link": "https://atcoder.jp/contests/abc348?lang=en",
         "unixTime": 1712462400000,
@@ -41,7 +41,7 @@ GETメソッドを使用し、JSON形式のコンテスト情報を得ること�
 | time      | 開催時刻を日本標準時で提供します。         |
 | title     | コンテストのタイトルを提供します。         |
 | link      | コンテストのリンクを提供します。           |
-| unixTime  | 開催時刻をUNIX時間形式で提供します。(日本標準時) |
+| unixTime  | 開催時刻をUNIX時間形式で提供します。(UTC) |
 | duration  | コンテスト開催までの残り時間を秒数で提供します。 |
 
 
